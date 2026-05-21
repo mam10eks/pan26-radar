@@ -1,0 +1,16 @@
+click==8.3.3
+datasets==4.0.0
+torch==2.10.0
+transformers[torch]==5.0.0
+accelerate==1.13.0
+scikit-learn==1.6.1
+optimum==2.1.0
+bitsandbytes==0.49.2
+pyppmd==1.3.1
+numpy==2.0.2
+huggingface_hub==1.11.0
+tqdm==4.67.3
+tira==0.0.200
+evaluate==0.4.6
+python-dotenv==1.2.2
+nltk==3.9.4
