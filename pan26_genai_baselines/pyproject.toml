@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=78.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pan25-genai-baselines"
+version = "1.0.0"
+description = "Baselines for the PAN'25 Generative AI Authorship verification shared task."
+authors = [
+  { name = "Janek Bevendorff" }
+]
+license = { text = "Apache License 2.0" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "click==8.3.3",
+    "datasets==4.0.0",
+    "torch==2.10.0",
+    "transformers[torch]==5.0.0",
+    "accelerate==1.13.0",
+    "scikit-learn==1.6.1",
+    "optimum==2.1.0",
+    "bitsandbytes==0.49.2",
+    "pyppmd==1.3.1",
+    "numpy==2.0.2",
+    "tqdm==4.67.3",
+
+]
+
+[project.urls]
+repository = "https://github.com/pan-webis-de/pan-code/tree/master/clef25/generative-authorship-verification"
+homepage = "https://pan.webis.de/clef25/pan25-web/generated-content-analysis.html"
+
+[project.scripts]
+pan25-baseline = "pan25_genai_baselines.cli:main"
+
+[tool.setuptools.package-data]
+pan25_genai_baselines = ['*.pkl']
