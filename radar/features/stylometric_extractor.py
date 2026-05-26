@@ -8,8 +8,6 @@ Category 3 – Discourse Coherence  (features 19-26)
 Category 4 – Style Fingerprinting (features 27-33)
 Category 5 – Perplexity Signals   (features 34-38)
 
-All features are computed with pure Python / regex / numpy (no heavy parsers),
-making the extractor fast and self-contained for sandboxed Docker inference.
 """
 
 import math
