@@ -98,7 +98,7 @@ def test(test_df: pd.DataFrame, model_path: str, device: str = "auto") -> pd.Dat
         preprocess_function,
         batched=True,
         fn_kwargs={"tokenizer": tokenizer},
-        remove_columns=["text"],
+        remove_columns=test_ds.column_names,
         desc="Tokenizing test dataset",
     )
     data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
@@ -135,3 +135,7 @@ def main(input_file, output_directory):
     output_path = Path(output_directory) / "predictions.jsonl"
     predictions_df.to_json(output_path, orient="records", lines=True)
     print(f"Predictions saved to {output_path}")
+
+
+if __name__ == "__main__":
+    main()
