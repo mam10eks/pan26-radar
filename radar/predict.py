@@ -1,5 +1,6 @@
 import random
 import re
+import os
 from pathlib import Path
 
 import click
@@ -119,15 +120,53 @@ def test(test_df: pd.DataFrame, model_path: str, device: str = "auto") -> pd.Dat
 
 
 @click.command()
-@click.argument(
-    "input_file", type=click.Path(exists=True, dir_okay=False, readable=True)
+@click.option(
+    "--input-directory",
+    type=click.Path(exists=True, file_okay=False, dir_okay=True, readable=True),
+    default=None,
+    help="Directory containing the task input file dataset.jsonl.",
 )
-@click.argument("output_directory", type=click.Path(file_okay=False, writable=True))
-def main(input_file, output_directory):
+@click.option(
+    "--output-directory",
+    type=click.Path(file_okay=False, dir_okay=True, writable=True),
+    default=None,
+    help="Directory where predictions.jsonl will be written.",
+)
+@click.argument(
+    "input_file",
+    required=False,
+    type=click.Path(exists=True, dir_okay=False, readable=True),
+)
+@click.argument(
+    "legacy_output_directory",
+    required=False,
+    type=click.Path(file_okay=False, writable=True),
+)
+def main(input_directory, output_directory, input_file, legacy_output_directory):
     set_seed(RANDOM_SEED)
+    # TIRA exposes these variables in the runtime environment.
+    input_directory = input_directory or os.getenv("inputDataset")
+    output_directory = output_directory or os.getenv("outputDir")
+
+    # Backward compatibility with previous positional CLI usage.
+    if input_file is not None:
+        input_path = Path(input_file)
+        output_directory = output_directory or legacy_output_directory
+    else:
+        if input_directory is None:
+            raise click.UsageError(
+                "Missing input. Provide --input-directory or set inputDataset environment variable."
+            )
+        input_path = Path(input_directory) / "dataset.jsonl"
+
+    if output_directory is None:
+        raise click.UsageError(
+            "Missing output directory. Provide --output-directory or set outputDir environment variable."
+        )
+
     Path(output_directory).mkdir(parents=True, exist_ok=True)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    test_df = pd.read_json(input_file, lines=True)
+    test_df = pd.read_json(input_path, lines=True)
     if "id" not in test_df.columns:
         test_df["id"] = test_df.index
 
