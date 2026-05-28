@@ -1,11 +1,8 @@
 from .configuration_radar import RADARConfig
 from .modeling_radar import (
-    AdversarialInvarianceLoss,
     CrossAttentionFusion,
-    MACLoss,
     RADARModel,
     RADAROutput,
-    TripletLoss,
 )
 
 __all__ = [
@@ -13,9 +10,7 @@ __all__ = [
     "RADARModel",
     "CrossAttentionFusion",
     "RADAROutput",
-    "AdversarialInvarianceLoss",
-    "TripletLoss",
-    "MACLoss",
+    "registers",
 ]
 
 

@@ -7,7 +7,7 @@ name = "radar"
 version = "1.0.0"
 description = "RADAR (Robust Adversarial-Resistant Detection with Adaptive Reasoning)."
 authors = [
-  { name = "Janek Bevendorff" }
+  { name = "yusr" }
 ]
 license = { text = "Apache License 2.0" }
 readme = "README.md"
@@ -15,7 +15,6 @@ requires-python = ">=3.10"
 dependencies = [
     "click==8.3.3",
     "datasets==4.0.0",
-    "torch==2.10.0",
     "transformers[torch]==5.0.0",
     "accelerate==1.13.0",
     "scikit-learn==1.6.1",
@@ -26,8 +25,6 @@ dependencies = [
     "huggingface_hub==1.11.0",
     "tqdm==4.67.3",
     "tira==0.0.200",
-    "evaluate==0.4.6",
-    "python-dotenv==1.2.2",
     "nltk==3.9.4",
     "pan25-genai-baselines @ file:./pan26_genai_baselines",
     "pan26-genai-evaluator @ file:./pan26_genai_evaluator",
@@ -37,8 +34,9 @@ dependencies = [
 [project.urls]
 repository = "https://github.com/yusrpro9/radar"
 
+[project.scripts]
+radar = "radar.predict:main"
+
 [tool.setuptools.packages.find]
 include = ["radar*"]
 
-[project.scripts]
-radar = "radar.cli:main"

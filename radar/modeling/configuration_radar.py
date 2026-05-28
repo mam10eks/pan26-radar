@@ -14,8 +14,6 @@ class RADARConfig(PretrainedConfig):
         fusion_dim: int = 512,
         num_attention_heads: int = 8,
         dropout: float = 0.1,
-        temperature: float = 1.0,
-        c_at_1_threshold: float = 0.05,
         **kwargs,
     ):
 
@@ -25,6 +23,4 @@ class RADARConfig(PretrainedConfig):
         self.fusion_dim = fusion_dim
         self.num_attention_heads = num_attention_heads
         self.dropout = dropout
-        self.temperature = temperature
-        self.c_at_1_threshold = c_at_1_threshold
         super().__init__(**kwargs)
