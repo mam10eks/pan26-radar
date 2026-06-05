@@ -26,9 +26,6 @@ dependencies = [
     "tqdm==4.67.3",
     "tira==0.0.200",
     "nltk==3.9.4",
-    "pan25-genai-baselines @ file:./pan26_genai_baselines",
-    "pan26-genai-evaluator @ file:./pan26_genai_evaluator",
-
 ]
 
 [project.urls]
