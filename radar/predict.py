@@ -14,7 +14,6 @@ from transformers import AutoTokenizer, DataCollatorWithPadding, set_seed
 from radar.features import StylemetricFeatureExtractor, extract_features_batch
 from radar.modeling import RADARModel
 
-MODEL_PATH = "yusr9/RADAR"
 RANDOM_SEED = 42
 random.seed(RANDOM_SEED)
 np.random.seed(RANDOM_SEED)
@@ -132,6 +131,12 @@ def test(test_df: pd.DataFrame, model_path: str, device: str = "auto") -> pd.Dat
     default=None,
     help="Directory where predictions.jsonl will be written.",
 )
+@click.option(
+    "--model",
+    default="yusr9/RADAR",
+    required=False,
+    help="The model to use",
+)
 @click.argument(
     "input_file",
     required=False,
@@ -142,7 +147,7 @@ def test(test_df: pd.DataFrame, model_path: str, device: str = "auto") -> pd.Dat
     required=False,
     type=click.Path(file_okay=False, writable=True),
 )
-def main(input_directory, output_directory, input_file, legacy_output_directory):
+def main(input_directory, output_directory, input_file, legacy_output_directory, model):
     set_seed(RANDOM_SEED)
     # TIRA exposes these variables in the runtime environment.
     input_directory = input_directory or os.getenv("inputDataset")
@@ -170,7 +175,7 @@ def main(input_directory, output_directory, input_file, legacy_output_directory)
     if "id" not in test_df.columns:
         test_df["id"] = test_df.index
 
-    predictions_df = test(test_df, model_path=MODEL_PATH, device=device)
+    predictions_df = test(test_df, model_path=model, device=device)
     output_path = Path(output_directory) / "predictions.jsonl"
     predictions_df.to_json(output_path, orient="records", lines=True)
     print(f"Predictions saved to {output_path}")
